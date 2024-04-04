@@ -19,3 +19,4 @@ seo:
   open_graph_type: article
   no_index: false
 ---
+import Alert from '../../components/alert/alert.astro';

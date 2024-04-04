@@ -117,9 +117,34 @@ data_config:
   icons:
     path: data/icons.yaml
 
-_structures:
-  features:
-    values:
-      - value:
-          item:
-          isActive:
+_snippets_imports:
+  mdx: true
+_snippets:
+  alert:
+    template: mdx_paired_component
+    inline: false
+    preview:
+      text: Alert message
+    definitions:
+      component_name: alert
+      content_key: slot
+      named_args:
+        - editor_key: background_color
+          type: string
+        - editor_key: text_color
+          type: string
+
+_editables:
+  content:
+    bold: true
+    format: p h1 h2 h3
+    italic: true
+    strike: true
+    link: true
+    horizontalrule: true
+    image: true
+    undo: true
+    redo: true
+    removeformat: true
+    copyformatting: true
+    snippet: true

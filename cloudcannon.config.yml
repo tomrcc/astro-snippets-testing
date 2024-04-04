@@ -3,15 +3,15 @@ paths:
   static: public
   uploads: public/uploads
 collections_config:
-  data:
-    path: data
-    disable_add: true
-    disable_add_folder: true
   posts:
     parser: front-matter
     path: src/content/blog
     output: true
     url: '/blog/[slug]/'
+  data:
+    path: data
+    disable_add: true
+    disable_add_folder: true
     _enabled_editors:
       - content
       - visual

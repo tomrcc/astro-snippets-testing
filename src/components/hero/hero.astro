@@ -1,0 +1,176 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+
+interface Props {
+  imagePath: string;
+  altText: string;
+  name: string;
+  width: number;
+  height: number;
+  icon: string;
+  blobColor: string;
+}
+
+const block = Astro.props;
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/*.{jpeg,jpg,png,gif}',
+  { eager: true }
+);
+
+const imageSrc = images[block.imagePath]?.default;
+const src =
+  typeof imageSrc === 'string'
+    ? imageSrc.replace(/^\./, '/_cloudcannon')
+    : imageSrc ?? block.imagePath;
+
+if (!src) {
+  throw new Error(
+    `"${block.imagePath}" does not exist in glob: "src/assets/*.{jpeg,jpg,png,gif}"`
+  );
+}
+let blobColor = block.blobColor;
+---
+
+<section class="hero-container">
+  <div class="content">
+    <h1 class="heading">Astro Bookshop Starter</h1>
+    <p>
+      A starting point for those looking to build a website with Astro, using
+      Bookshop components in CloudCannon. Create your own copy, and start
+      creating your own components to use in the CloudCannon CMS.
+    </p>
+    <div class="buttons">
+      <button class="btn">
+        <i class=`fa-solid fa-${ block.icon }`></i>CloudCannon
+      </button>
+      <button class="btn btn-outline"
+        ><i class=`fa-solid fa-${ block.icon }`></i>GitHub</button
+      >
+    </div>
+  </div>
+
+  <Image
+    class="blob"
+    style=`width: ${block.width}px; height: ${block.height}px;`
+    alt={block.altText}
+    width={block.width}
+    height={block.height}
+    src={src}
+  />
+</section>
+
+<style define:vars={{ blobColor }} is:global>
+  .hero-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 48px;
+    padding-inline: 24px;
+    max-width: 1280px;
+    margin-inline: auto;
+    overflow: hidden;
+  }
+
+  .content h1 {
+    font-size: 3.8em;
+    line-height: 1em;
+    font-weight: 700;
+    /* background: -webkit-linear-gradient(to left, #eee 50%, #333); */
+    background: linear-gradient(to left, #a0a2ff 50%, #000000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    z-index: 10;
+  }
+  .content p {
+    margin: 20px 0;
+    font-size: 1.5em;
+    color: rgb(59, 61, 62);
+    line-height: 2.18rem;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: fit-content;
+    justify-content: center;
+  }
+  button {
+    padding: 0.75rem 1.2rem;
+    border-radius: 20px;
+    font-size: 1.25em;
+    cursor: pointer;
+    transition: all ease-in-out 0.15s;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn {
+    background: #4384e6;
+    color: #fff;
+    border: none;
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn:hover {
+    background: #0066ff;
+  }
+
+  .btn-outline {
+    border: 1px solid #0d6efd;
+    background: transparent;
+    color: #0d6efd;
+    margin-left: 5px;
+  }
+
+  button i {
+    font-size: 0.78em;
+  }
+  .blob {
+    box-shadow: 0 5px 5px 5px #034ad8;
+    background-size: cover;
+    -webkit-background-position: center;
+    background-position: center center;
+    margin: 20px;
+    animation: animate 5s ease-in-out infinite;
+    transition: all 1s ease-in-out;
+  }
+
+  @media only screen and (min-width: 400px) {
+    .buttons {
+      flex-direction: row;
+    }
+  }
+  @media only screen and (min-width: 800px) {
+    .hero-container {
+      flex-direction: row;
+      padding-block: 96px;
+      padding-inline: 48px;
+    }
+    .content {
+      width: 50%;
+    }
+    .buttons {
+      flex-direction: column;
+    }
+  }
+  @media only screen and (min-width: 1000px) {
+    .buttons {
+      flex-direction: row;
+    }
+  }
+
+  @keyframes animate {
+    0%,
+    100% {
+      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
+    50% {
+      border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+    }
+  }
+</style>

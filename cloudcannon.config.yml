@@ -8,6 +8,7 @@ collections_config:
     disable_add: true
     disable_add_folder: true
   posts:
+    parser: front-matter
     path: src/content/blog
     output: true
     url: '/blog/[slug]/'
@@ -21,7 +22,7 @@ collections_config:
     schemas:
       default:
         name: New Post
-        path: schemas/post.md
+        path: schemas/post.mdx
     _inputs:
       title:
         empty_type: string
@@ -127,11 +128,25 @@ _snippets:
       text: Alert message
     definitions:
       component_name: alert
-      content_key: slot
+      content_key: '<slot />'
       named_args:
         - editor_key: background_color
           type: string
         - editor_key: text_color
+          type: string
+  cta:
+    template: mdx_component
+    inline: false
+    preview:
+      text: Call to Action
+    definitions:
+      component_name: cta
+      named_args:
+        - editor_key: background_color
+          type: string
+        - editor_key: text_color
+          type: string
+        - editor_key: text
           type: string
 
 _editables:

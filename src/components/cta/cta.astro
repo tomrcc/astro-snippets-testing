@@ -1,0 +1,7 @@
+---
+const props = Astro.props
+---
+
+<button class="h-[100px] w-full" style=`background-color: ${props.background_color}; color: ${props.text_color}`>
+{props.text}
+</button>

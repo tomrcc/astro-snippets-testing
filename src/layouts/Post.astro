@@ -27,7 +27,7 @@ const { title, date, image, image_alt, author } = props;
 const content = Astro.props.body ?? Astro.props.rawContent();
 const wordCount = content.split(' ').length;
 const readingTime = Math.floor(wordCount / 183);
-const dateObj = new Date(date);
+// const dateObj = new Date(date);
 const authorDomain = 'https://simple-onion.cloudvent.net/profiles/';
 const authorSlug = author.toLowerCase().replace(/ /g, '-');
 const authorUrl = [authorDomain, authorSlug, '/'].join('');
@@ -64,15 +64,6 @@ const posts = await getCollection('blog');
                   <a href={authorUrl}>{author}</a>
                 </li>
                 <li class="post-data-list-item">
-                  <p>
-                    {
-                      dateObj.toLocaleDateString(undefined, {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      })
-                    }
-                  </p>
                 </li>
                 <div class="flex gap-3">
                   <li class="post-data-list-item post-size">
